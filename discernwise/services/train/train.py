@@ -13,6 +13,15 @@ class TrainingResults(NamedTuple):
     loss: List[float]
     validation_loss: List[float]
 
+    @property
+    def epochs_count(self) -> int:
+        """
+        Returns the number or epochs.
+        All of the four lists should have the same length,
+        so `accuracy` is just a random choice.
+        """
+        return len(self.accuracy)
+
 
 def train(confg: TrainingConfig) -> TrainingResults:
     train_dataset, validation_dataset, class_names = get_datasets(confg.data_dir, confg.image_size, confg.batch_size)
@@ -41,4 +50,3 @@ def train(confg: TrainingConfig) -> TrainingResults:
 # plt.title('Training and Validation Loss')
 # plt.show()
 #
-# model.save(MODEL_PATH)
