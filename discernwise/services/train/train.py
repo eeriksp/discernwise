@@ -1,8 +1,8 @@
 from typing import NamedTuple, List
+import json
 
-from tensorflow.python.keras.callbacks import History
-
-from .conf import TrainingConfig
+from config import ModelConfig
+from .config import TrainingConfig
 from .dataset import get_datasets
 from .model import get_model
 
@@ -32,6 +32,7 @@ def train(confg: TrainingConfig) -> TrainingResults:
         epochs=confg.epochs
     ).history
     model.save(confg.model_path)
+    ModelConfig(class_names).save(confg.model_path)
     return TrainingResults(history['accuracy'], history['val_accuracy'], history['loss'], history['val_loss'])
 
 # epochs_range = range(EPOCHS)

@@ -1,6 +1,9 @@
+from __future__ import annotations
+
 from dataclasses import dataclass, InitVar
 from pathlib import Path
-from typing import NamedTuple
+from typing import NamedTuple, List
+import json
 
 
 class ImageSize(NamedTuple):
@@ -19,3 +22,20 @@ class Config:
     def __post_init__(self, img_height: int, img_width: int, model_path_str: str):
         self.image_size = ImageSize(img_height, img_width)
         self.model_path = Path(model_path_str).resolve()
+
+
+class ModelConfig:
+    filename = 'discernwise.json'
+
+    def __init__(self, class_names: List[str]):
+        self.class_names = class_names
+
+    def save(self, model_path: Path):
+        with open(model_path / self.filename, 'w') as f:
+            json.dump({'class_names': self.class_names}, f)
+
+    @classmethod
+    def load(cls, model_path: Path) -> ModelConfig:
+        with open(model_path / cls.filename, 'r') as f:
+            data = json.load(f)
+            return ModelConfig(data['class_names'])
