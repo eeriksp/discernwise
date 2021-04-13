@@ -4,8 +4,8 @@ BaseCommand.execute()
 
 # import argparse
 #
-# parser = argparse.ArgumentParser()
-# subparsers = parser.add_subparsers(help='top-level commands', dest='command')
+# p = argparse.ArgumentParser()
+# subparsers = p.add_subparsers(help='top-level commands', dest='command')
 #
 # train_parser = subparsers.add_parser('train', help='train a new model with the given dataset')
 # train_parser.add_argument('dataset_path',
@@ -16,7 +16,7 @@ BaseCommand.execute()
 # classify_parser.add_argument('image_path', help='path to the image we want to classify')
 # classify_parser.add_argument('model_path', help='path to the model used for classification')
 #
-# print(parser.parse_args())
+# print(p.parse_args())
 #
 # class A:
 #

@@ -35,7 +35,7 @@ def train(confg: TrainingConfig) -> TrainingResults:
     ModelConfig(class_names).save(confg.model_path)
     return TrainingResults(history['accuracy'], history['val_accuracy'], history['loss'], history['val_loss'])
 
-# epochs_range = range(EPOCHS)
+# epochs_range = range(epochs)
 #
 # plt.figure(figsize=(8, 8))
 # plt.subplot(1, 2, 1)

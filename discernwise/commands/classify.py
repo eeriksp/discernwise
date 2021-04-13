@@ -13,7 +13,6 @@ class ClassifyCommand(BaseCommand):
     def add_arguments(parser: ArgumentParser) -> None:
         parser.add_argument('model_path', help='path to the model used for classification')
         parser.add_argument('image_paths', nargs='+', help='paths to the images to be classified')
-        parser.add_argument('--gui', action='store_true')
 
     @staticmethod
     def build_config(args) -> ClassificationConfig:
