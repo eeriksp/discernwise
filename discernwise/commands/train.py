@@ -1,19 +1,7 @@
 from argparse import ArgumentParser
-from dataclasses import dataclass, InitVar
-from pathlib import Path
 
 from commands.base import BaseCommand
-from config import Config
-
-
-@dataclass
-class TrainingConfig(Config):
-    epochs: int = 2
-    data_dir_str: InitVar[str] = None
-
-    def __post_init__(self, model_path_str: str, data_dir_str: str):
-        super().__post_init__(model_path_str)
-        self.data_dir = Path(data_dir_str).resolve()
+from services.train import TrainingConfig, train
 
 
 class TrainCommand(BaseCommand):
@@ -32,6 +20,4 @@ class TrainCommand(BaseCommand):
 
     @classmethod
     def handle(cls, config: TrainingConfig) -> None:
-        print(f'Here is our config: {config}')
-        print(config.model_path)
-        print(config.data_dir)
+        train(config)
