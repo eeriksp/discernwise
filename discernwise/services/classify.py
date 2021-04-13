@@ -28,6 +28,7 @@ def classify(config: ClassificationConfig) -> Dict[Path, Dict[str, float]]:
         prediction = model.predict(img)[0]
         score = tf.nn.softmax(prediction)
         result[img_path] = OrderedDict()
+        print(score)
         result[img_path][class_names[np.argmax(score)]] = 100 * np.max(score)
     return result
 #
