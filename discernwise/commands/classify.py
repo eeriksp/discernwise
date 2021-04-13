@@ -1,6 +1,7 @@
 from argparse import ArgumentParser
 
 from commands.base import BaseCommand
+from presentation.classify import visualize_classification_results
 from services.classify import ClassificationConfig, classify
 
 
@@ -21,4 +22,4 @@ class ClassifyCommand(BaseCommand):
     @classmethod
     def handle(cls, config: ClassificationConfig) -> None:
         results = classify(config)
-        print(results)
+        visualize_classification_results(results)
