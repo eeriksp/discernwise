@@ -3,7 +3,10 @@ from matplotlib import pyplot as plt
 from services.train.train import TrainingResults
 
 
-def visualize_training_results(results: TrainingResults) -> None:
+def display_training_results(results: TrainingResults) -> None:
+    """
+    Display a GUI window showing how the loss and accuracy progressed through the training epochs.
+    """
     epochs_range = range(results.epochs_count)
 
     plt.figure(figsize=(8, 8))

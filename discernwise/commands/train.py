@@ -1,7 +1,7 @@
 from argparse import ArgumentParser
 
 from commands.base import BaseCommand
-from presentation.train import visualize_training_results
+from presentation.train import display_training_results
 from services.train import TrainingConfig, train
 
 
@@ -27,4 +27,4 @@ class TrainCommand(BaseCommand):
     @staticmethod
     def handle(config: TrainingConfig) -> None:
         results = train(config)
-        visualize_training_results(results)
+        display_training_results(results)
