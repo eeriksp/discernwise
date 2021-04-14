@@ -18,7 +18,7 @@ class ClassifyCommand(BaseCommand):
     def build_config(args) -> ClassificationConfig:
         return ClassificationConfig(model_path_str=args.model_path, image_str_paths=args.image_paths)
 
-    @classmethod
-    def handle(cls, config: ClassificationConfig) -> None:
+    @staticmethod
+    def handle(config: ClassificationConfig) -> None:
         results = classify(config)
         visualize_classification_results(results)

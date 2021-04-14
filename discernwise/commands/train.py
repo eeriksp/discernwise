@@ -19,7 +19,7 @@ class TrainCommand(BaseCommand):
     def build_config(args) -> TrainingConfig:
         return TrainingConfig(model_path_str=args.model_path, data_dir_str=args.dataset_path, epochs=args.epochs)
 
-    @classmethod
-    def handle(cls, config: TrainingConfig) -> None:
+    @staticmethod
+    def handle(config: TrainingConfig) -> None:
         results = train(config)
         visualize_training_results(results)
