@@ -10,7 +10,7 @@ from config import ImageSize
 Dataset = tf.data.Dataset
 
 
-def get_datasets(data_dir: Path, img_size: ImageSize, batch_size: int) -> Tuple[Dataset, Dataset, List[str]]:
+def get_datasets(data_dir: Path, img_size: ImageSize, batch_size: int) -> Tuple[Dataset, Dataset, Tuple[str]]:
     """
     :return: A tuple containing
       1. the training dataset,
@@ -20,10 +20,10 @@ def get_datasets(data_dir: Path, img_size: ImageSize, batch_size: int) -> Tuple[
     dataset_factory = _get_dataset_factory(data_dir, img_size, batch_size)
     train_dataset = dataset_factory(subset="training")
     validation_dataset = dataset_factory(subset="validation")
-    class_names = train_dataset.class_names
+    labels = tuple(train_dataset.class_names)
     cached_train_dataset = train_dataset.cache().shuffle(1000).prefetch(buffer_size=tf.data.AUTOTUNE)
     cached_validation_dataset = validation_dataset.cache().prefetch(buffer_size=tf.data.AUTOTUNE)
-    return cached_train_dataset, cached_validation_dataset, class_names
+    return cached_train_dataset, cached_validation_dataset, labels
 
 
 def _get_dataset_factory(data_dir: Path, img_size: ImageSize, batch_size: int) -> Callable[..., tf.data.Dataset]:

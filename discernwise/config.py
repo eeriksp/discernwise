@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, InitVar
 from pathlib import Path
-from typing import NamedTuple, List
+from typing import NamedTuple, List, Tuple
 import json
 
 
@@ -38,15 +38,15 @@ class ModelConfig:
     """
     filename = 'discernwise.json'
 
-    def __init__(self, class_names: List[str]):
-        self.class_names = class_names
+    def __init__(self, labels: Tuple[str]):
+        self.labels = labels
 
     def save(self, model_path: Path):
         with open(model_path / self.filename, 'w') as f:
-            json.dump({'class_names': self.class_names}, f)
+            json.dump({'labels': self.labels}, f)
 
     @classmethod
     def load(cls, model_path: Path) -> ModelConfig:
         with open(model_path / cls.filename, 'r') as f:
             data = json.load(f)
-            return ModelConfig(data['class_names'])
+            return ModelConfig(data['labels'])

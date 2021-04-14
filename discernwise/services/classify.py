@@ -7,6 +7,7 @@ import tensorflow as tf
 from tensorflow.keras.preprocessing import image
 
 from config import Config, ModelConfig
+from model import load_model
 from utils.collections import sort_by_values
 
 
@@ -31,16 +32,15 @@ def classify(config: ClassificationConfig) -> ClassificationResult:
     Classify the given images using the given model and
     return the probabilities that any given image matches any given label.
     """
-    model = tf.keras.models.load_model(config.model_path)
+    model, labels = load_model(config.model_path)
     result = OrderedDict()
-    class_names = ModelConfig.load(config.model_path).class_names
     for img_path in config.image_paths:
         img = tf.expand_dims(image.img_to_array(image.load_img(img_path, target_size=config.image_size)), 0)
         prediction = model.predict(img)[0]
         np_scores = tf.nn.softmax(prediction)
         scores = [float(i) for i in np_scores]
         result[img_path] = OrderedDict()
-        for i in range(len(class_names)):
-            result[img_path][class_names[i]] = scores[i]
+        for i in range(len(labels)):
+            result[img_path][labels[i]] = scores[i]
             result[img_path] = sort_by_values(result[img_path], reverse=True)
     return result
