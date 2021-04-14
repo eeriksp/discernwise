@@ -6,6 +6,11 @@ from services.train import TrainingConfig, train
 
 
 class TrainCommand(BaseCommand):
+    """
+    Use the given dataset to train a new model,
+    save the model to the given path
+    and display a GUI window with training statistics.
+    """
     name = 'train'
     help = 'train a new model with the given dataset'
 

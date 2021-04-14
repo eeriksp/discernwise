@@ -6,6 +6,10 @@ from services.classify import ClassificationConfig, classify
 
 
 class ClassifyCommand(BaseCommand):
+    """
+    Use the given model to classify the given images (one or more).
+    The results will be displayed as a GUI window.
+    """
     name = 'classify'
     help = 'classify the given images using the given model'
 
