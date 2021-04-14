@@ -11,7 +11,13 @@ Dataset = tf.data.Dataset
 
 
 def get_datasets(data_dir: Path, img_size: ImageSize, batch_size: int) -> Tuple[Dataset, Dataset, List[str]]:
-    dataset_factory = get_base_dataset(data_dir, img_size, batch_size)
+    """
+    :return: A tuple containing
+      1. the training dataset,
+      2. the validation dataset
+      3. the labels in alphabetical order
+    """
+    dataset_factory = _get_dataset_factory(data_dir, img_size, batch_size)
     train_dataset = dataset_factory(subset="training")
     validation_dataset = dataset_factory(subset="validation")
     class_names = train_dataset.class_names
@@ -20,7 +26,14 @@ def get_datasets(data_dir: Path, img_size: ImageSize, batch_size: int) -> Tuple[
     return cached_train_dataset, cached_validation_dataset, class_names
 
 
-def get_base_dataset(data_dir: Path, img_size: ImageSize, batch_size: int) -> Callable[..., tf.data.Dataset]:
+def _get_dataset_factory(data_dir: Path, img_size: ImageSize, batch_size: int) -> Callable[..., tf.data.Dataset]:
+    """
+    Return a `partial` object, which can be called to obtain the datasets:
+        train_dataset = dataset_factory(subset="training")
+        validation_dataset = dataset_factory(subset="validation")
+    where `dataset_factory` is the return value of this function.
+    :param data_dir: path of the directory with the training data
+    """
     return partial(keras.preprocessing.image_dataset_from_directory,
                    data_dir,
                    validation_split=0.2,

@@ -8,6 +8,10 @@ from config import ImageSize
 
 
 def get_model(imgsize: ImageSize, classes_count: int) -> keras.Model:
+    """
+    Return the new model to be trained.
+    The model will contain the `data_augmentation` layer to reduce overfitting.
+    """
     data_augmentation = keras.Sequential(
         [
             layers.experimental.preprocessing.RandomFlip("horizontal", input_shape=(imgsize.height, imgsize.width, 3)),

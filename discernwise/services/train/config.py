@@ -8,7 +8,7 @@ from config import Config
 class TrainingConfig(Config):
     epochs: int = 2
     batch_size: int = 32
-    data_dir_str: InitVar[str] = None
+    data_dir_str: InitVar[str] = None  # the path of the dataset
 
     def __post_init__(self, img_height: int, img_width: int, model_path_str: str, data_dir_str: str):
         super().__post_init__(img_height, img_width, model_path_str)

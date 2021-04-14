@@ -19,10 +19,18 @@ class ClassificationConfig(Config):
         self.image_paths = [Path(img).resolve() for img in image_str_paths]
 
 
+"""
+A dictionary mapping the path of the image to the classification outcome.
+The classification outcome is in turn a dictionary mapping the labels to the probabilities.
+"""
 ClassificationResult = Dict[Path, Dict[str, float]]
 
 
 def classify(config: ClassificationConfig) -> ClassificationResult:
+    """
+    Classify the given images using the given model and
+    return the probabilities that any given image matches any given label.
+    """
     model = tf.keras.models.load_model(config.model_path)
     result = OrderedDict()
     class_names = ModelConfig.load(config.model_path).class_names

@@ -7,12 +7,20 @@ import json
 
 
 class ImageSize(NamedTuple):
+    """
+    This tuple format is used by the TensorFlow API.
+    This namedtuple is created to make the code more readable.
+    """
     height: int
     width: int
 
 
 @dataclass
 class Config:
+    """
+    The base class for other command-specific configurations
+    holding the values required by all the commands.
+    """
     img_height: InitVar[int] = 250
     img_width: InitVar[int] = 250
     model_path_str: InitVar[str] = None
@@ -23,6 +31,11 @@ class Config:
 
 
 class ModelConfig:
+    """
+    Handle persisting and loading DiscernWise specific configuration for each model.
+    TensorFlow saves its model as a directory.
+    The custom configuration a placed to a file within that directory.
+    """
     filename = 'discernwise.json'
 
     def __init__(self, class_names: List[str]):
